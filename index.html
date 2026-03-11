@@ -8,24 +8,27 @@
 <style>
 
 body{
-background: linear-gradient(135deg,#ff9a9e,#fad0c4);
-font-family: Arial, sans-serif;
+margin:0;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-margin:0;
-color:#fff;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4);
+font-family:'Segoe UI',sans-serif;
+overflow:hidden;
+color:white;
 text-align:center;
 }
 
 .card{
-background: rgba(255,255,255,0.15);
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(12px);
 padding:40px;
 border-radius:20px;
-backdrop-filter: blur(10px);
-max-width:500px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
+width:90%;
+max-width:600px;
+box-shadow:0 10px 40px rgba(0,0,0,0.3);
+z-index:2;
 }
 
 h1{
@@ -33,28 +36,58 @@ font-size:28px;
 margin-bottom:20px;
 }
 
-p{
+#carta{
+opacity:0;
+transition:opacity 2s ease;
 font-size:18px;
-line-height:1.6;
+line-height:1.7;
 }
 
 button{
-margin-top:25px;
+margin-top:20px;
 padding:12px 25px;
 border:none;
 border-radius:30px;
 background:white;
-color:#ff6f91;
+color:#ff4d6d;
 font-size:16px;
 cursor:pointer;
 }
 
-.hidden{
-display:none;
+#secreto{
+margin-top:25px;
+}
+
+input{
+padding:10px;
+border-radius:20px;
+border:none;
+width:70%;
+text-align:center;
+}
+
+#mensajeSecreto{
+margin-top:20px;
+font-size:17px;
+opacity:0;
+transition:opacity 1s;
+}
+
+.heart{
+position:absolute;
+bottom:-20px;
+color:white;
+font-size:20px;
+animation:float 8s linear infinite;
+opacity:0.8;
+}
+
+@keyframes float{
+0%{transform:translateY(0) scale(1);}
+100%{transform:translateY(-100vh) scale(1.5);}
 }
 
 </style>
-
 </head>
 
 <body>
@@ -63,31 +96,32 @@ display:none;
 
 <h1>🌸 Para ti — 8 de marzo 🌸</h1>
 
-<p>
+<button onclick="mostrarCarta()">Abrir carta</button>
+
+<p id="carta">
+
 Hoy no quiero hablar solo de una fecha.<br>
 Quiero hablar de ti.
-</p>
-
-<button onclick="mostrar()">Toca aquí</button>
-
-<p id="mensaje" class="hidden">
-
-Me gusta la forma en que enfrentas el mundo,<br>
-la fuerza que llevas contigo incluso cuando el día pesa,<br>
-y esa manera tuya de seguir adelante.
 
 <br><br>
 
-Hay algo en ti que no todos logran ver a simple vista,
-pero cuando uno lo descubre… se vuelve imposible ignorarlo.
+De la mujer que sigue adelante incluso cuando el día pesa,
+de esa mezcla de fuerza y ternura que llevas contigo.
 
 <br><br>
 
-Tu forma de ser,  
-tu mirada,  
-tu sonrisa…  
+Hay algo en ti que no todos logran ver a simple vista…
+pero cuando uno lo descubre, ya no puede ignorarlo.
 
-hacen que todo alrededor se sienta distinto.
+<br><br>
+
+Tu mirada,<br>
+tu risa,<br>
+tu forma de estar en el mundo.
+
+<br><br>
+
+Todo eso hace que el día se sienta distinto.
 
 <br><br>
 
@@ -111,13 +145,74 @@ Y me alegra poder estar cerca para verlo.
 
 </p>
 
+<div id="secreto">
+
+<p>🔐 Si tienes un código secreto escríbelo aquí:</p>
+
+<input id="codigo" placeholder="Ingresa el código">
+
+<br><br>
+
+<button onclick="verificar()">Abrir</button>
+
+<p id="mensajeSecreto"></p>
+
+</div>
+
 </div>
 
 <script>
 
-function mostrar(){
-document.getElementById("mensaje").classList.remove("hidden");
+function mostrarCarta(){
+document.getElementById("carta").style.opacity=1;
 }
+
+function verificar(){
+
+let codigo=document.getElementById("codigo").value.toLowerCase();
+let mensaje=document.getElementById("mensajeSecreto");
+
+let secretos={
+
+"playa":"🌊 Siempre recordaré la playa donde todo empezó.",
+
+"sonrisa":"Tu sonrisa sigue siendo uno de mis lugares favoritos.",
+
+"topacio":"Tus ojos tienen un brillo que no se olvida.",
+
+"futuro":"Algún día quiero mirar atrás y ver que todo empezó aquí."
+
+};
+
+if(secretos[codigo]){
+mensaje.innerHTML=secretos[codigo];
+mensaje.style.opacity=1;
+}else{
+mensaje.innerHTML="Ese código aún no desbloquea nada...";
+mensaje.style.opacity=1;
+}
+
+}
+
+function crearCorazon(){
+
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+10)+"px";
+heart.style.animationDuration=(Math.random()*5+5)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},8000);
+
+}
+
+setInterval(crearCorazon,500);
 
 </script>
 
