@@ -1,6 +1,6 @@
 const secretos={
 
-playa:"🌊 La playa donde empezó uno de mis recuerdos favoritos.",
+playa:"🌊 La playa donde empezó uno de mis recuerdos favoritos. Siempre sera el lugar que mas me traer recuerdos",
 
 sonrisa:"Tu sonrisa puede arreglar un día entero.",
 
