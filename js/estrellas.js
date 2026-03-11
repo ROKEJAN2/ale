@@ -22,12 +22,12 @@ function crearFugaz(){
 fugaces.push({
 x:Math.random()*canvas.width,
 y:0,
-vel:10
+vel:5
 })
 
 }
 
-setInterval(crearFugaz,4000);
+setInterval(crearFugaz,800);
 
 function animar(){
 
