@@ -1,263 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para ti</title>
 
-<style>
+<title>Nuestra Historia</title>
 
-body{
-margin:0;
-height:100vh;
-font-family:'Segoe UI',sans-serif;
-background:black;
-overflow:hidden;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
-
-#stars{
-position:fixed;
-width:100%;
-height:100%;
-background:url('https://raw.githubusercontent.com/VincentGarreau/particles.js/master/demo/media/star.png');
-animation:moveStars 120s linear infinite;
-opacity:0.6;
-}
-
-@keyframes moveStars{
-from{background-position:0 0;}
-to{background-position:10000px 5000px;}
-}
-
-.card{
-position:relative;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(12px);
-padding:40px;
-border-radius:20px;
-width:90%;
-max-width:650px;
-box-shadow:0 0 40px rgba(255,100,150,0.3);
-z-index:10;
-}
-
-h1{
-font-size:30px;
-margin-bottom:20px;
-}
-
-#carta{
-font-size:18px;
-line-height:1.7;
-min-height:200px;
-}
-
-button{
-margin-top:20px;
-padding:12px 25px;
-border:none;
-border-radius:30px;
-background:#ff4d6d;
-color:white;
-font-size:16px;
-cursor:pointer;
-}
-
-input{
-margin-top:15px;
-padding:10px;
-border-radius:20px;
-border:none;
-width:70%;
-text-align:center;
-}
-
-#mensajeSecreto{
-margin-top:20px;
-font-size:17px;
-opacity:0;
-transition:opacity 1s;
-}
-
-.heart{
-position:absolute;
-color:#ff6b81;
-animation:float 10s linear infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0);}
-100%{transform:translateY(-100vh);}
-}
-
-#contador{
-margin-top:20px;
-font-size:15px;
-opacity:0.8;
-}
-
-</style>
+<link rel="stylesheet" href="css/estilos.css">
 
 </head>
 
 <body>
 
-<div id="stars"></div>
+<canvas id="estrellas"></canvas>
 
-<div class="card">
+<div class="contenedor">
 
-<h1>✨ Para ti ✨</h1>
+<h1>✨ Nuestra Historia ✨</h1>
 
 <div id="carta"></div>
 
-<button onclick="iniciar()">Abrir carta</button>
+<button id="btnAbrir">Abrir carta</button>
 
 <div id="contador"></div>
 
-<div>
+<hr>
 
-<p>🔐 Código secreto:</p>
+<h2>🔐 Código secreto</h2>
 
-<input id="codigo" placeholder="Escribe tu código">
-
-<br>
-
-<button onclick="verificar()">Abrir recuerdo</button>
+<input id="codigo" placeholder="Escribe un código">
+<button id="btnCodigo">Descubrir</button>
 
 <p id="mensajeSecreto"></p>
 
-</div>
+<hr>
+
+<h2>📖 Libro de recuerdos</h2>
+<div id="recuerdos"></div>
+
+<hr>
+
+<h2>🗝 Capítulos</h2>
+<div id="capitulos"></div>
+
+<hr>
+
+<h2>💌 Carta del día</h2>
+<div id="cartaDia"></div>
 
 </div>
 
 <audio id="musica" loop>
-<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6e7c83c60e.mp3">
+<source src="audio/musica.mp3">
 </audio>
 
-<script>
-
-let texto=`Hoy no quiero hablar solo de una fecha.
-
-Quiero hablar de ti.
-
-De la forma en que sigues adelante incluso cuando el día pesa,
-de esa mezcla de fuerza y ternura que llevas contigo.
-
-Hay algo en ti que no todos logran ver a simple vista...
-pero cuando uno lo descubre, ya no puede ignorarlo.
-
-Tu mirada.
-Tu sonrisa.
-Tu forma de existir en el mundo.
-
-Todo eso hace que el día se sienta distinto.
-
-Hoy solo quería recordarte algo sencillo:
-
-Eres una mujer increíble.
-
-Y me alegra poder estar cerca para verlo.
-
-Feliz 8 de marzo.
-
-— José`;
-
-let i=0;
-
-function iniciar(){
-
-document.getElementById("musica").play();
-
-let carta=document.getElementById("carta");
-
-function escribir(){
-
-if(i<texto.length){
-
-carta.innerHTML+=texto.charAt(i);
-i++;
-setTimeout(escribir,40);
-
-}
-
-}
-
-escribir();
-
-}
-
-function verificar(){
-
-let codigo=document.getElementById("codigo").value.toLowerCase();
-let mensaje=document.getElementById("mensajeSecreto");
-
-let secretos={
-
-"playa":"🌊 La playa donde todo empezó sigue siendo uno de mis lugares favoritos.",
-
-"topacio":"Tus ojos tienen un brillo que no se parece a nada.",
-
-"sonrisa":"Hay días que se arreglan solo con verla.",
-
-"futuro":"Hay historias que empiezan pequeñas… pero uno desea que duren toda la vida."
-
-};
-
-if(secretos[codigo]){
-
-mensaje.innerHTML=secretos[codigo];
-mensaje.style.opacity=1;
-
-}else{
-
-mensaje.innerHTML="Ese código aún no desbloquea nada… todavía.";
-mensaje.style.opacity=1;
-
-}
-
-}
-
-function crearCorazon(){
-
-let heart=document.createElement("div");
-
-heart.className="heart";
-heart.innerHTML="❤";
-
-heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*20+10)+"px";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{heart.remove();},10000);
-
-}
-
-setInterval(crearCorazon,600);
-
-let inicio=new Date("2024-01-01");
-
-function actualizarContador(){
-
-let ahora=new Date();
-
-let diff=ahora-inicio;
-
-let dias=Math.floor(diff/(1000*60*60*24));
-
-document.getElementById("contador").innerHTML=
-"Han pasado "+dias+" días desde que empezó esta historia.";
-
-}
-
-setInterval(actualizarContador,1000);
-
-</script>
+<script src="js/secretos.js"></script>
+<script src="js/estrellas.js"></script>
+<script src="js/corazones.js"></script>
+<script src="js/capitulos.js"></script>
+<script src="js/recuerdos.js"></script>
+<script src="js/cartas365.js"></script>
+<script src="js/sorpresas.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
